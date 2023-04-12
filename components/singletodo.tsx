@@ -1,21 +1,21 @@
 import { Todo } from '@/model/model'
-import {MdModeEditOutline} from 'react-icons/md'
-import {AiTwotoneDelete, AiOutlineCheck} from 'react-icons/ai'
-interface Props{
-    todo : Todo;
-    todos : Todo[];
-   setTodos : React.Dispatch<React.SetStateAction<Todo[]>>
+import React from 'react'
+import {AiFillDelete} from 'react-icons/ai'
+import {todoState} from '../state/todostate'
+import {useRecoilState} from 'recoil'
+interface Props {
+    todo : Todo
 }
 
-const SingleTodo : React.FC<Props> = ({todo, todos, setTodos} : Props) => {
+const SingleTodo : React.FC<Props> = ({todo} : Props) => {
+    const [todos, setTodos] = useRecoilState<Todo[]>(todoState)
+    const deleteHandler = (id : number) => {
+       setTodos(todos.filter((item) => item.id !==id))
+    }
   return (
-    <div className=" flex-grow flex items-center bg-yellow-400 text-white shadow-md font-bold capitalize">
-        <h3 className=" p-3 flex-grow">{todo.todo}</h3>
-        <div className="flex items-center space-x-1 mr-1">
-            <button><MdModeEditOutline /></button>
-            <button><AiTwotoneDelete /></button>
-            <button><AiOutlineCheck /></button>
-        </div>
+    <div className="flex items-center flex-grow text-xl rounded-md bg-yellow-400 p-3">
+       <div className="flex-grow"> {todo.todo}</div>
+       <button onClick={() => deleteHandler(todo.id)}><AiFillDelete /></button>
     </div>
   )
 }

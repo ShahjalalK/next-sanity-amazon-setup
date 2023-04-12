@@ -2,8 +2,8 @@
 module.exports = {
   content: [
     "./pages/index.tsx",
-    "./components/inputfild.tsx",
-    "./components/todolist.tsx",
+    "./components/addmenu.tsx",
+    "./components/todolists.tsx",
     "./components/singletodo.tsx",
   ],
   theme: {

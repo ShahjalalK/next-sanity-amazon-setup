@@ -1,26 +1,34 @@
-import InputField from '@/components/inputfild'
-import TodoList from '@/components/todolist'
-import { Todo } from '@/model/model'
-import React, { useState } from 'react'
+import AddMenu from "@/components/addmenu"
+import { useState } from "react"
+import {useRecoilState} from 'recoil'
+import {todoState} from "../state/todostate"
+import { Todo } from "@/model/model"
+import TodoList from "@/components/todolists"
 
 const Home : React.FC = () => {
-  const [todo, setTodo] = useState<string>("")
-  const [todos, setTodos] = useState <Todo[]>([])
+  const [textValue, setTextValue] = useState<string>('')
+  const [todos, setTodos] = useRecoilState<Todo[]>(todoState)
+ 
+  const addTodo = (e : React.FormEvent) => {
+    e.preventDefault()  
+   if(textValue){
+    setTodos([...todos, {id:Date.now(), todo : textValue}])
+    setTextValue("")
 
-  const handleAdd = (e : React.FormEvent) => {
-    e.preventDefault()
-    if(todo){
-      setTodos([...todos, {id:Date.now(), todo, isDone : false}])
-      setTodo("")
-    }
+   }else{
+    return
+   }
     
   }
+
+  
  
-  return (
-    <div className="max-w-4xl mx-1 md:mx-auto">
-      <h1 className=" uppercase text-[40px] m-[30px 0] text-white z-10 text-center">Taskify</h1>
-      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>   
-      <TodoList todos={todos} setTodos={setTodos} />  
+ 
+   return (
+    <div className="max-w-5xl mx-auto my-5">
+      <h1 className="text-3xl text-center">Todo List</h1>
+      <AddMenu addTodo={addTodo} textValue={textValue} setTextValue={setTextValue}/>
+    <TodoList />
     </div>
   )
 }
