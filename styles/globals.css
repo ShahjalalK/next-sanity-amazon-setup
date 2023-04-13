@@ -2,8 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-    body{
-        @apply bg-[#2f74c0]
-    }
-}

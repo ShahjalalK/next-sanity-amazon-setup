@@ -1,36 +1,41 @@
-import AddMenu from "@/components/addmenu"
-import { useState } from "react"
-import {useRecoilState} from 'recoil'
-import {todoState} from "../state/todostate"
-import { Todo } from "@/model/model"
-import TodoList from "@/components/todolists"
+import Banner from '@/components/banner'
+import BlogLists from '@/components/bloglists'
+import Header from '@/components/header'
+import { client } from '@/lib/sanity.client'
+import { groq } from 'next-sanity'
+import { type } from 'os'
+import React from 'react'
 
-const Home : React.FC = () => {
-  const [textValue, setTextValue] = useState<string>('')
-  const [todos, setTodos] = useRecoilState<Todo[]>(todoState)
- 
-  const addTodo = (e : React.FormEvent) => {
-    e.preventDefault()  
-   if(textValue){
-    setTodos([...todos, {id:Date.now(), todo : textValue}])
-    setTextValue("")
+const query = groq`
+*[_type == "post"]{
+  ...,
+  categories[]->,
+  author->
+} | order(_createdAt desc)
+`
 
-   }else{
-    return
-   }
-    
-  }
+type Props = {
+  blogs : Post[]
+}
 
-  
+const Home : React.FC <Props> = ({blogs} : Props) => {
+  console.log(blogs)
  
- 
-   return (
-    <div className="max-w-5xl mx-auto my-5">
-      <h1 className="text-3xl text-center">Todo List</h1>
-      <AddMenu addTodo={addTodo} textValue={textValue} setTextValue={setTextValue}/>
-    <TodoList />
+  return (
+    <div className="max-w-7xl mx-auto">
+      <Header />
+      <Banner />
+      <BlogLists posts={blogs} />
     </div>
   )
 }
 
 export default Home
+
+export const getServerSideProps = async (context : any) => {
+  const blogs = await client.fetch(query)
+  console.log(blogs)
+  return {
+    props: {blogs}, // will be passed to the page component as props
+  }
+}
