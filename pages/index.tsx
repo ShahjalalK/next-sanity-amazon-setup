@@ -1,41 +1,16 @@
-import Banner from '@/components/banner'
-import BlogLists from '@/components/bloglists'
 import Header from '@/components/header'
-import { client } from '@/lib/sanity.client'
-import { groq } from 'next-sanity'
-import { type } from 'os'
-import React from 'react'
+import Hero from '@/components/hero'
+import { NextPage } from 'next'
 
-const query = groq`
-*[_type == "post"]{
-  ...,
-  categories[]->,
-  author->
-} | order(_createdAt desc)
-`
-
-type Props = {
-  blogs : Post[]
-}
-
-const Home : React.FC <Props> = ({blogs} : Props) => {
-  console.log(blogs)
- 
+const Home : NextPage = () => {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="bg-[rgba(36,36,36)] text-white h-screen snap-y snap-mandatory overflow-scroll z-0">
       <Header />
-      <Banner />
-      <BlogLists posts={blogs} />
+      <section id='hero' className="snap-center">
+        <Hero />
+      </section>
     </div>
   )
 }
 
 export default Home
-
-export const getServerSideProps = async (context : any) => {
-  const blogs = await client.fetch(query)
-  console.log(blogs)
-  return {
-    props: {blogs}, // will be passed to the page component as props
-  }
-}

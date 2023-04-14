@@ -3,11 +3,9 @@ module.exports = {
   content: [
     "./layout/layout.tsx",   
     "./pages/index.tsx",
-    "./components/adminnavbar.tsx",
+    "./components/backgroundcircles.tsx",
     "./components/header.tsx",
-    "./components/banner.tsx",
-    "./components/bloglists.tsx",
-    "./components/bloglist.tsx",
+    "./components/hero.tsx",
   ],
   theme: {
     extend: {
