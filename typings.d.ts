@@ -1,58 +1,50 @@
-import { Reference, Slug } from "sanity";
+import { Image } from "sanity";
 
-type Base = {
+interface SanityBody {
   _createdAt: string;
   _id: string;
   _rev: string;
-  _type: string;
   _updatedAt: string;
-  
-};
-
-interface Post extends Base {
-  author: Author;
-  body: Block[];
-  categories: Category[];
-  mainImage: Image;
-  slug: Slug;
-  title: string;
 }
-
-interface Author extends Base {
-  bio: Block[];
-  image : Image
-  slug : Slug
+export interface PageInfo extends SanityBody{
+  address : string
+  email : string
+  heroImage : Image
   name : string
+  phonenumber : number
+  profilePic : Image
+  role : string
+  socials : Social[] 
 }
-interface Block{
-    _key : string
-    _type : "block"
-    children : Span[]
-    markDefs : any[]
-    style : "normal" | "h1" | "h2"|"h3"|"h4"|"blockquote"
+export interface Exprience extends SanityBody{
+  _type : 'exprience'
+  company : string
+  companyImage : Image
+  dateEnded : date
+  dateStarted : date
+  isCurrentlyWorkingHere : boolean
+  jobTitle : string
+  points : string[]
+  technologiles : Technology[]
+}
 
+export interface Project extends SanityBody{
+  _type : 'projects'
+  image : Image
+  linkToBuild : string
+  summary : string
+  technologies : Technology[]
+  title : string
+}
+export interface Skill extends SanityBody{
+  _type: 'skill'
+  image : Image
+  progress : number
+  title : string
+}
+export interface Social extends SanityBody {
+  _type: "social";
+  title: string;
+  url: string;
 }
 
-interface Span {
-    _key : string
-    _type : 'span'
-    marks : string[]
-    text : string
-}
-
-interface Category extends Base{
-    _type: 'category'
-    description : string
-    image : Image
-    name : string
-    slug : Slug
-}
-interface mainImage{
-    asset : Reference
-    _type : "image"
-
-}
-interface slug{
-    current : string
-    _type : "slug"
-}
