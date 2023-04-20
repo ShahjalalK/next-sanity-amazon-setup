@@ -1,7 +1,6 @@
-import Social from './social'
-import pageinfo from './pageinfo'
-import Project from './project'
-    import Exprience from './exprience'
-import Skill from './skill'
+import { Category } from "./category";
+import { HomeBannerSlider } from "./homeBannerSlider";
+import { HomePageInfo } from "./homePageInfo";
+import { Product } from "./product";
 
-export const schemaTypes = [pageinfo, Social, Project, Exprience, Skill]
+export const schemaTypes = [HomePageInfo, HomeBannerSlider, Product, Category];

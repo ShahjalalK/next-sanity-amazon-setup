@@ -1,29 +1,81 @@
-import { Social } from '@/typings';
-import React from 'react'
-import { SocialIcon } from 'react-social-icons';
+import { urlFor } from "@/lib/sanity.client";
+import { Home } from "@/typings";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import {
+  AiOutlineSearch,
+  AiOutlineShoppingCart,
+  AiOutlineMenu,
+} from "react-icons/ai";
 
 type Props = {
-  socials : Social[]
-}
+  homePage: Home[];
+};
 
-const Header = ({socials}: Props) => {
- 
+const Header = ({ homePage }: Props) => {
+  let colorCode = homePage[0].favoriteColor.hex;
   return (
-    <div className="sticky top-0 flex items-center justify-between max-w-7xl mx-auto z-20">
-        <div className="flex flex-row items-center">
-          {socials.map((item) => (
-            <SocialIcon url={item?.url} target="_blank" fgColor='gray' bgColor='transparent' />
-          ))}
-        
-        
+    <header className=" ">
+      <div className="flex-grow flex items-center bg-amazon_blue-default px-4 p-2">
+        <div className="mx-1 md:mx-6 mt-2 flex-grow md:flex-grow-0">
+          <Image
+            src={urlFor(homePage[0].logo).url()}
+            alt="amazon"
+            width={150}
+            height={80}
+          />
         </div>
-        <div className="flex flex-row items-center text-gray-300">
-          <SocialIcon network="email" url="#contact" fgColor='gray' bgColor='transparent' />
-            <p className="uppercase hidden md:inline-flex font-medium cursor-pointer">Get In Touch</p>
+        <div
+        style={{backgroundColor : `${colorCode}`}}
+          className={`hidden md:flex items-center flex-grow cursor-pointer rounded-md`}
+        >
+          <input
+            type="text"
+            className="flex-grow h-10 focus:outline-none  px-4 bg-white rounded-l-md"
+          />
+          <AiOutlineSearch className="text-4xl text-white" />
         </div>
-    </div>
-  )
-}
 
-export default Header
+        <div className="mx-6 flex items-center space-x-3 text-white whitespace-nowrap">
+          <div className="link">
+            <p className="text-xs ">Hello, Sign In</p>
+            <p className="text-xs font-extrabold md:text-sm">Account & Lists</p>
+          </div>
+          <div className="link flex flex-col space-y-0">
+            <p className="text-xs font-extrabold md:text-sm">Returns</p>
+            <p className="text-xs font-extrabold md:text-sm">& Orders</p>
+          </div>
+          <div className="link flex items-center relative">
+            <span
+            style={{backgroundColor : `${colorCode}`}}
+              className={`absolute top-0 right-0 md:right-10 h-5 w-5 rounded-full flex items-center justify-center text-xs`}
+            >
+              0
+            </span>
+            <AiOutlineShoppingCart className="text-4xl" />
+            <p className="text-xs font-extrabold md:text-sm mt-5 hidden md:inline">Basket</p>
+          </div>
+        </div>
+      </div>
+      <div className="bg-amazon_blue-light pl-6 p-2">
+        <div className="text-white flex items-center space-x-3">
+          <p className="flex link items-center space-x-1">
+            <AiOutlineMenu /> All
+          </p>
+          <Link className="link" href="/">
+            Headsets
+          </Link>
+          <Link className="link" href="/">
+            Keyboards
+          </Link>
+          <Link className="link" href="/">
+            Computer mice
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+};
 
+export default Header;

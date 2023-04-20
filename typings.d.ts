@@ -1,50 +1,41 @@
-import { Image } from "sanity";
-
-interface SanityBody {
+interface Base {
   _createdAt: string;
   _id: string;
   _rev: string;
   _updatedAt: string;
 }
-export interface PageInfo extends SanityBody{
-  address : string
-  email : string
-  heroImage : Image
-  name : string
-  phonenumber : number
-  profilePic : Image
-  role : string
-  socials : Social[] 
-}
-export interface Exprience extends SanityBody{
-  _type : 'exprience'
-  company : string
-  companyImage : Image
-  dateEnded : date
-  dateStarted : date
-  isCurrentlyWorkingHere : boolean
-  jobTitle : string
-  points : string[]
-  technologiles : Technology[]
+
+export interface Home extends Base {
+  _type: "home";
+  logo: Image;
+  favoriteColor: Color;
 }
 
-export interface Project extends SanityBody{
-  _type : 'projects'
-  image : Image
-  linkToBuild : string
-  summary : string
-  technologies : Technology[]
-  title : string
-}
-export interface Skill extends SanityBody{
-  _type: 'skill'
-  image : Image
-  progress : number
-  title : string
-}
-export interface Social extends SanityBody {
-  _type: "social";
+export interface HomeBanner extends Base {
   title: string;
-  url: string;
+  images: Images[];
 }
 
+interface Images {
+  _key : string
+  _type : 'image'
+  asset : any
+}
+
+export interface Product extends Base{
+  _type : 'product'
+  title : string
+  medium : boolean 
+  small : boolean 
+  large : boolean
+  price : number
+  oldprice : number
+  images : Images[]
+  rating : number
+  slug : string
+  description : 'Block'
+  productColorCode : ColorCode[]
+  off : number  
+  
+  category : Category
+}

@@ -11,7 +11,8 @@ export const client = createClient({
     apiVersion,
     useCdn: process.env.NODE_ENV === "production"
 })
+
 const builder = imageUrlBuilder(client)
-export const urlFor = (source : any) => {
+export const urlFor = (source : any) =>  {
     return builder.image(source)
   }

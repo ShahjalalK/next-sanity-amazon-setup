@@ -1,6 +1,8 @@
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
+import { colorInput } from "@sanity/color-input";
+import {media} from 'sanity-plugin-media'
 import {schemaTypes} from './schemas'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
@@ -13,7 +15,7 @@ export const config =  defineConfig({
   projectId,
   dataset,
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool(), visionTool(), media(), colorInput()],
 
   schema: {
     types: schemaTypes,
