@@ -9,16 +9,17 @@ export const Product: SchemaTypeDefinition = {
   fields: [
     {
       name: "images",
-      title: "Images",
-      type: "array",
-      of: [
-        {
-          type: "image",
-          options: { hotspot: true },
-        },
-      ],
+      title: "Product Images",
+      type: "array",      
+     of : [
+      {
+        type: "reference",
+      to: [{ type: "productImage" }],
+      }
+     ],
       validation: (Rule) => Rule.required(),
-    },
+    },    
+   
     {
       name: "title",
       title: "Product Title",
@@ -43,12 +44,7 @@ export const Product: SchemaTypeDefinition = {
       type: "reference",
       to: [{ type: "category" }],
     },
-    {
-      name: "productColorCode",
-      title: "Product Color Code",
-      type: "array",
-      of: [{ type: "string" }],
-    },
+   
     {
       name: "small",
       title: "Small Product Size",
@@ -95,6 +91,13 @@ export const Product: SchemaTypeDefinition = {
         },
       ],
     },
+    {
+      name : 'previewProductImage',
+      title : 'Preview Product Image',
+      type : 'image',
+      options : {hotspot : true},
+      validation : (Rule) => Rule.required()
+    }
   ],
-  preview: { select: { title: "title", media: "images.0.asset" } },
+  preview: { select: { title: "title", media: "previewProductImage" } },
 };

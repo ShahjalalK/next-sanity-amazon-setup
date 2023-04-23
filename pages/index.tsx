@@ -14,13 +14,13 @@ type Props = {
 };
 
 const Home = ({ homePage, homeBanners, products }: Props) => {
-  
+    
   return (
     <div>
       <Header homePage={homePage} />
       <main className=" max-w-screen-2xl mx-auto bg-gray-200">
       <Banner homeBanners={homeBanners} />
-      <ProductList products={products} />
+      <ProductList products={products} homePage={homePage} />
       </main>
     </div>
   );

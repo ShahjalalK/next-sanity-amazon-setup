@@ -6,8 +6,9 @@ import { groq } from "next-sanity"
 const query = groq`
     *[_type == "product"]{
         ...,
-        category->
-    }
+        category->,
+        images[]->
+    } | order(_updatedAt desc)
 `
 type Data = {
     product : Product[]

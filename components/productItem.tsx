@@ -1,28 +1,57 @@
 import Image from "next/image";
+import { ToastContainer, toast } from 'react-toastify';
+
 import React, { useState } from "react";
-import { AiOutlineStar, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineStar } from "react-icons/ai";
 import { FaCompressAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { Product } from "@/typings";
+import { Home, Product } from "@/typings";
 import { urlFor } from "@/lib/sanity.client";
+import { productState, useProductState } from "@/stateMannage/state";
+import { useRecoilValue } from "recoil";
 
 type Props = {
   product: Product;
+  homePage : Home[]
+
 };
 
-const ProductItem = ({ product }: Props) => {
-  const [toggleState, setToggleState] = useState(0)
+const ProductItem = ({ product, homePage }: Props) => {   
+ 
+  const {_id, title, price, description, rating} = product 
+  const {addProduct} = useProductState() 
+  const productValue = useRecoilValue(productState)
+   const [toggleState, setToggleState] = useState(0)
+  const [notifaction, setNotifaction] = useState(false)
+  
+
   const toggleTab = (i : number) => {    
     setToggleState(i)
   }
+
+  const addToBasket = (id : string) => {
+    addProduct({
+      _id,
+      title,
+      price,
+      description,
+      rating}
+    )
+      
+    setNotifaction(true)
+      toast('👌 Product added')   
+      
+   
+    
+  }
   
-  return (
+  return (   
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 1.5, delay: 0.5 }}
-      className="bg-white rounded-2xl z-20 shadow-md drop-shadow-md"
+      className="bg-white rounded-2xl z-20 shadow-md drop-shadow-md relative"
     >
       <div className=" relative h-52 overflow-hidden rounded-2xl bg-gradient-to-t from-gray-200 to-gray-300 shadow-inner  ">
         {product.off && (
@@ -34,16 +63,16 @@ const ProductItem = ({ product }: Props) => {
           <FaCompressAlt />
         </span>
         {product.images.map((productImage, index) => (
-            <motion.div initial={{opacity : toggleState === index ? 1 : 0}} animate={{opacity : toggleState === index ? 1 : 0}} transition={{duration : 0.50}}>
+            <motion.div key={productImage._id} initial={{opacity : toggleState === index ? 1 : 0}} animate={{opacity : toggleState === index ? 1 : 0}} transition={{duration : 0.50}}>
               <Image
-              src={urlFor(productImage).url()}
+              src={urlFor(productImage.image).url()}
               alt="earphone"
               width={350}
               height={350}             
               className={` w-full absolute object-contain h-52  z-10`}                     
             />
             </motion.div>
-          ))}
+          ))}         
       </div>
       <div className="p-3">
         <div className="flex items-start flex-grow">
@@ -60,14 +89,14 @@ const ProductItem = ({ product }: Props) => {
 
         <div className="flex items-center justify-between">
           <div className="py-3 flex items-center gap-5">
-            {product.productColorCode.map((item, index) => (
-              <div className="relative">
+            {product.images.map((item, index) => (
+              <div key={item._id} className="relative">
                 <span
-                  style={{ borderColor: `${item}` }}
+                  style={{ borderColor: `${item.color.hex}` }}
                   className={`absolute w-4 h-4 rounded-full border-2 cursor-pointer p-[3px]`} onClick={() => toggleTab(index)}
                 ></span>
                 {toggleState === index && 
-                  <span style={{ backgroundColor: `${item}` }} className=" absolute top-1 left-1 bg-red-500 w-2 h-2 rounded-full content-['']"></span>
+                  <span style={{ backgroundColor: `${item.color.hex}` }} className=" absolute top-1 left-1 w-2 h-2 rounded-full content-['']"></span>
                 }
               </div>
             ))}
@@ -103,11 +132,14 @@ const ProductItem = ({ product }: Props) => {
             <AiOutlineStar />
             <span>{product?.rating || 0}</span>
           </div>
-          <button className="text-lg border border-gray-200 rounded-xl px-2 py-1 uppercase text-[#ff9900]">
+          <button onClick={() => addToBasket(product._id)} style={{color : `${homePage[0].favoriteColor.hex}`}} className="text-lg border border-gray-200 rounded-xl px-2 py-1 uppercase">
             Buy+
-          </button>
+          </button>          
         </div>
-      </div>
+        {notifaction && <ToastContainer position="top-center" />}
+                
+      </div>     
+      
     </motion.div>
   );
 };

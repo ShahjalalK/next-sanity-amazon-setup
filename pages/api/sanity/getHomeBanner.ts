@@ -1,5 +1,5 @@
 import { client } from "@/lib/sanity.client"
-import { Home, HomeBanner } from "@/typings"
+import { HomeBanner } from "@/typings"
 import { NextApiRequest, NextApiResponse } from "next"
 import { groq } from "next-sanity"
 

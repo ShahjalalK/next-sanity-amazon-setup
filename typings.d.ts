@@ -1,3 +1,5 @@
+import { Image } from "sanity";
+
 interface Base {
   _createdAt: string;
   _id: string;
@@ -17,25 +19,51 @@ export interface HomeBanner extends Base {
 }
 
 interface Images {
-  _key : string
-  _type : 'image'
-  asset : any
+  _key: string;
+  _type: "image";
+  asset: any;
 }
 
-export interface Product extends Base{
-  _type : 'product'
+export interface Product extends Base {
+  _type: "product";
+  title: string;
+  medium: boolean;
+  small: boolean;
+  large: boolean;
+  price: number;
+  oldprice: number;
+  images: ProductImages[];
+  rating: number;
+  slug: string;
+  description: "Block";
+  off: number;
+  previewProductImage: Image;  
+  category: Category[];
+}
+
+interface Category extends Base {
+  image: Image;
+  name: string;
+  slug: string;
+}
+
+
+interface ProductImages extends Base {
+  "_type": "image"
+  image : Image
+  color : Color
+
+}
+interface Color {
+  hex : string
+}
+
+
+export interface ProductState {
+  _id: string
   title : string
-  medium : boolean 
-  small : boolean 
-  large : boolean
   price : number
-  oldprice : number
-  images : Images[]
+  description : string
   rating : number
-  slug : string
-  description : 'Block'
-  productColorCode : ColorCode[]
-  off : number  
-  
-  category : Category
+
 }
