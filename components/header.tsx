@@ -22,12 +22,14 @@ const Header = ({ homePage }: Props) => {
     <header className=" ">
       <div className="flex-grow flex items-center bg-amazon_blue-default px-4 p-2">
         <div className="mx-1 md:mx-6 mt-2 flex-grow md:flex-grow-0">
-          <Link href="/"><Image
+          <Link href="/" className="w-32 h-auto">
+            <Image
             src={urlFor(homePage[0].logo).url()}
             alt="amazon"
             width={150}
-            height={80}
-          /></Link>
+            height={90}            
+          />
+          </Link>
         </div>
         <div
         style={{backgroundColor : `${colorCode}`}}
@@ -49,8 +51,8 @@ const Header = ({ homePage }: Props) => {
             <p className="text-xs font-extrabold md:text-sm">Returns</p>
             <p className="text-xs font-extrabold md:text-sm">& Orders</p>
           </div>
-          <div className="link">
-            <Link href="/checkout" className="flex items-center relative">
+          <div className="link flex items-center relative">
+            
             <span
             style={{backgroundColor : `${colorCode}`}}
               className={`absolute top-0 right-0 md:right-10 h-5 w-5 rounded-full flex items-center justify-center text-xs`}
@@ -59,7 +61,7 @@ const Header = ({ homePage }: Props) => {
             </span>
             <AiOutlineShoppingCart className="text-4xl" />
             <p className="text-xs font-extrabold md:text-sm mt-5 hidden md:inline">Basket</p>
-            </Link>
+           
           </div>
         </div>
       </div>

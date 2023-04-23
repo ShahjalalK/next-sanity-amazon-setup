@@ -19,10 +19,11 @@ const Banner = ({homeBanners}: Props) => {
          interval={5000}
          showStatus={false}
          showIndicators={false}
+         showThumbs={false}
          >
            {homeBanners[0].images.map((item) => (
             <div key={item._key}>
-                <Image src={urlFor(item).url()} alt='banner' width={1350} height={350} className=" object-cover" />
+                <Image src={urlFor(item).url()} alt='banner' width={1350} height={350} className=" object-cover" priority />
             </div>
            ))}
                 

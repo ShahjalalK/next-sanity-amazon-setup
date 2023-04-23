@@ -63,7 +63,7 @@ const ProductItem = ({ product, homePage }: Props) => {
           <FaCompressAlt />
         </span>
         {product.images.map((productImage, index) => (
-            <motion.div key={productImage._id} initial={{opacity : toggleState === index ? 1 : 0}} animate={{opacity : toggleState === index ? 1 : 0}} transition={{duration : 0.50}}>
+            <motion.div key={index} initial={{opacity : toggleState === index ? 1 : 0}} animate={{opacity : toggleState === index ? 1 : 0}} transition={{duration : 0.50}}>
               <Image
               src={urlFor(productImage.image).url()}
               alt="earphone"
@@ -90,7 +90,7 @@ const ProductItem = ({ product, homePage }: Props) => {
         <div className="flex items-center justify-between">
           <div className="py-3 flex items-center gap-5">
             {product.images.map((item, index) => (
-              <div key={item._id} className="relative">
+              <div key={index} className="relative">
                 <span
                   style={{ borderColor: `${item.color.hex}` }}
                   className={`absolute w-4 h-4 rounded-full border-2 cursor-pointer p-[3px]`} onClick={() => toggleTab(index)}
