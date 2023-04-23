@@ -7,8 +7,8 @@ import { FaCompressAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Home, Product } from "@/typings";
 import { urlFor } from "@/lib/sanity.client";
-import { productState, useProductState } from "@/stateMannage/state";
-import { useRecoilValue } from "recoil";
+import { useProductState } from "@/stateMannage/state";
+
 
 type Props = {
   product: Product;
@@ -20,7 +20,6 @@ const ProductItem = ({ product, homePage }: Props) => {
  
   const {_id, title, price, description, rating} = product 
   const {addProduct} = useProductState() 
-  const productValue = useRecoilValue(productState)
    const [toggleState, setToggleState] = useState(0)
   const [notifaction, setNotifaction] = useState(false)
   
