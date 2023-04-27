@@ -28,7 +28,7 @@ const Home = ({ homePage, homeBanners, products }: Props) => {
 
 export default Home;
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const homePage: Home[] = await fetchHomePage();
   const homeBanners: HomeBanner[] = await fetchHomeBanner();
   const products : Product[] = await fetchProduct()
@@ -39,6 +39,6 @@ export const getStaticProps = async () => {
       homeBanners,
       products
     },
-    revalidate: 10,
+    // revalidate: 10,
   };
 };
